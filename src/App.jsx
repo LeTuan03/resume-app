@@ -1,5 +1,11 @@
+import Resume from "./pages/resume/Resume";
+
 function App() {
-    return <>This is resume</>;
+    return (
+        <>
+            <Resume />
+        </>
+    );
 }
 
 export default App;
