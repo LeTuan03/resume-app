@@ -10,3 +10,26 @@
 body {
     margin: 0;
 }
+
+.main-left::-webkit-scrollbar {
+    width: 0;
+}
+.ant-picker-large {
+    padding: 9.5px 11px 9.5px;
+}
+.text-area-custom textarea {
+    background-color: #eff2f9;
+    min-height: 250px;
+}
+.quill {
+    border-radius: 6px !important;
+    overflow: hidden;
+}
+.quill div {
+    background-color: #eff2f9;
+    border: none !important;
+}
+
+.ql-editor {
+    min-height: 250px;
+}
