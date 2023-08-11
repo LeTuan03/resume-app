@@ -1,17 +1,17 @@
 import React from "react";
 import { Collapse, theme } from "antd";
 import { CaretRightOutlined } from "@ant-design/icons";
-import ColapChildren from "./ColapChildren";
+import ColapSocialChildren from "./ColapSocialChildren";
 
 const getItems = (panelStyle) => [
     {
         key: "1",
         label: <b>Not specified</b>,
-        children: <ColapChildren />,
+        children: <ColapSocialChildren />,
         style: panelStyle,
     },
 ];
-export default function Colap() {
+export default function ColapSocial() {
     const { token } = theme.useToken();
     const panelStyle = {
         marginBottom: 24,
