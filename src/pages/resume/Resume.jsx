@@ -5,6 +5,7 @@ import EmployeeHistory from "../../components/employee-history/EmployeeHistory";
 import Education from "../../components/education/Education";
 import WedAndSocialLink from "../../components/wed-and-social-link/WedAndSocialLink";
 import Skills from "../../components/skills/Skills";
+import ResumeBuilder from "../../components/resume-builder/ResumeBuilder";
 
 export default function Resume() {
     return (
@@ -17,7 +18,9 @@ export default function Resume() {
                 <WedAndSocialLink />
                 <Skills />
             </div>
-            <div className="bg-[#656e83] h-screen">09</div>
+            <div className="bg-[#656e83] h-screen relative">
+                <ResumeBuilder />
+            </div>
         </div>
     );
 }
