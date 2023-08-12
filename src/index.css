@@ -7,8 +7,8 @@
     line-height: 1.5;
 }
 * {
-    box-sizing: border-box;
     margin: 0;
+    box-sizing: border-box;
 }
 
 .main-left::-webkit-scrollbar {
@@ -32,4 +32,13 @@
 
 .ql-editor {
     min-height: 250px;
+}
+.editor {
+    height: 85vh;
+    width: 60vh;
+    position: relative;
+    font-size: small;
+}
+.main * {
+    font-size: 12px;
 }
