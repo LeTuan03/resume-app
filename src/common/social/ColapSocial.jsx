@@ -25,7 +25,7 @@ export default function ColapSocial() {
             <Collapse
                 bordered={false}
                 expandIcon={({ isActive }) => (
-                    <CaretRightOutlined rotate={isActive ? 90 : 0} />
+                    <CaretRightOutlined rotate={isActive ? 90 : -90} />
                 )}
                 style={{
                     background: token.colorBgContainer,

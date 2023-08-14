@@ -34,18 +34,16 @@ export default function ColapSkill({ isShow }) {
         },
     ];
     return (
-        <div>
-            <Collapse
-                bordered={false}
-                expandIcon={({ isActive }) => (
-                    <CaretRightOutlined rotate={isActive ? 90 : 0} />
-                )}
-                style={{
-                    background: token.colorBgContainer,
-                }}
-                items={getItems(panelStyle)}
-                expandIconPosition="end"
-            />
-        </div>
+        <Collapse
+            bordered={false}
+            expandIcon={({ isActive }) => (
+                <CaretRightOutlined rotate={isActive ? 90 : -90} />
+            )}
+            style={{
+                background: token.colorBgContainer,
+            }}
+            items={getItems(panelStyle)}
+            expandIconPosition="end"
+        />
     );
 }

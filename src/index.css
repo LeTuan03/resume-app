@@ -42,3 +42,6 @@
 .main * {
     font-size: 12px;
 }
+.btn-hover:hover {
+    background-color: #eaf6ff80;
+}

@@ -1,14 +1,23 @@
 import React from "react";
+import { useSelector } from "react-redux";
 
 export default function Detail() {
+    const personal = useSelector((state) => state.personal);
     return (
         <div>
             <p className="font-semibold">Detail</p>
             <div className="mb-5">
-                <p className="!text-[10px]">Ha Noi</p>
-                <p className="!text-[10px]">Thanh Hoa</p>
-                <p className="!text-[10px]">0987654321</p>
-                <p className="!text-[10px] text-[#2c9bf3]">leetuan@gmail.com</p>
+                <p className="!text-[10px]">{personal.city}</p>
+                <p className="!text-[10px]">{personal.country}</p>
+                <p className="!text-[10px]">{personal.phone}</p>
+                <p className="!text-[10px] text-[#2c9bf3]">{personal.email}</p>
+                <p className="!text-[10px] text-slate-400 mt-3">
+                    {personal.date_of_birth && `Date`}
+                    {personal.date_of_birth && personal.place_of_birth && "/"}
+                    {personal.place_of_birth && `Place of birth`}
+                </p>
+                <p className="!text-[10px]">{personal.date_of_birth}</p>
+                <p className="!text-[10px]">{personal.place_of_birth}</p>
             </div>
         </div>
     );

@@ -1,12 +1,17 @@
-import React, { useState } from "react";
+import React from "react";
 import { Typography } from "antd";
 const { Title, Text } = Typography;
 
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { useDispatch } from "react-redux";
+import { addProfile } from "../../redux/profile/profileSlice";
 
 export default function ProfessionalSummary() {
-    const [content, setContent] = useState("");
+    const dispatch = useDispatch();
+    const handleChange = (e) => {
+        dispatch(addProfile(e));
+    };
     return (
         <div className="mb-5">
             <Title level={4}>Professional Summary</Title>
@@ -16,8 +21,7 @@ export default function ProfessionalSummary() {
                 achievements, best qualities and skills.
             </Text>
             <ReactQuill
-                value={content}
-                onChange={setContent}
+                onChange={handleChange}
                 placeholder="e.g Passionate science teacher with 8+ years of a track of ..."
             />
             <Text level={4} type="secondary" className="font-semibold">

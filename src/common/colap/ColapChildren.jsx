@@ -1,20 +1,34 @@
 import React, { useState } from "react";
 import ReactQuill from "react-quill";
-import { DatePicker, Form, Input, Typography } from "antd";
+import { Button, DatePicker, Form, Input, Typography } from "antd";
+import { useDispatch } from "react-redux";
+import { addHistory } from "../../redux/history/historySlice";
+import formatDate from "../date/FormatDate";
 
 const { Text } = Typography;
 
-const ColapChildren = () => {
+const ColapChildren = ({ setTitle }) => {
+    const dispatch = useDispatch();
     const [content, setContent] = useState("");
+    const onFinish = async (e) => {
+        e.start = formatDate(e.start);
+        e.end = formatDate(e.end);
+        e.description = content;
+        dispatch(addHistory(e));
+    };
     return (
         <div>
-            <Form layout="vertical">
+            <Form layout="vertical" onFinish={onFinish}>
                 <div className="grid grid-cols-2 gap-x-10 gap-y-0">
                     <Form.Item
                         name="job_title"
                         label={<p className="text-[#828ba2]">Job title</p>}
                     >
-                        <Input className="bg-[#eff2f9] border-none py-3 px-4" />
+                        <Input
+                            className="bg-[#eff2f9] border-none py-3 px-4"
+                            onChange={(e) => setTitle(e.target.value)}
+                            maxLength={50}
+                        />
                     </Form.Item>
                     <Form.Item
                         name="employer"
@@ -22,25 +36,29 @@ const ColapChildren = () => {
                     >
                         <Input className="bg-[#eff2f9] border-none py-3 px-4" />
                     </Form.Item>
-                    <Form.Item
-                        name="start"
-                        label={
-                            <p className="text-[#828ba2]">Start & End date</p>
-                        }
-                    >
-                        <div className="flex gap-4 h-full">
+                    <div className="flex gap-4 h-full">
+                        <Form.Item
+                            name="start"
+                            label={
+                                <p className="text-[#828ba2]">
+                                    Start & End date
+                                </p>
+                            }
+                        >
                             <DatePicker
                                 format="MMM, YYYY"
                                 size="large"
                                 picker="month"
                             />
+                        </Form.Item>
+                        <Form.Item name="end" label=" ">
                             <DatePicker
                                 format="MMM, YYYY"
                                 size="large"
                                 picker="month"
                             />
-                        </div>
-                    </Form.Item>
+                        </Form.Item>
+                    </div>
 
                     <Form.Item
                         name="city"
@@ -63,6 +81,9 @@ const ColapChildren = () => {
                         Recruiter tip: write 50-200 characters to increase
                         interview chances
                     </Text>
+                </Form.Item>
+                <Form.Item>
+                    <Button htmlType="submit">Add</Button>
                 </Form.Item>
             </Form>
         </div>

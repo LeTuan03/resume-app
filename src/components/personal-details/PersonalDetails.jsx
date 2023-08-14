@@ -1,15 +1,22 @@
 import React from "react";
 import { Avatar, Form, Input, Typography, Upload, Button } from "antd";
 import { UserOutlined } from "@ant-design/icons";
+import { useDispatch, useSelector } from "react-redux";
+import { add } from "../../redux/personal/PersonalSlice";
 const { Title } = Typography;
 
 export default function PersonalDetails() {
+    const dispatch = useDispatch();
+    const persional = useSelector((state) => state.personal);
+    const onFinish = (value) => {
+        dispatch(add(value));
+    };
     return (
         <div className="mb-5">
             <Title level={4} className="!mb-5">
                 Personal Details
             </Title>
-            <Form layout="vertical">
+            <Form layout="vertical" onFinish={onFinish}>
                 <div className="grid grid-cols-2 gap-x-10 gap-y-0">
                     <Form.Item
                         name="job_description"
@@ -93,6 +100,12 @@ export default function PersonalDetails() {
                         <Input className="bg-[#eff2f9] border-none py-3 px-4" />
                     </Form.Item>
                 </div>
+                <Form.Item>
+                    <Button htmlType="submit">Save</Button>
+                    <Button onClick={() => console.log(persional)}>
+                        Save2
+                    </Button>
+                </Form.Item>
             </Form>
         </div>
     );
