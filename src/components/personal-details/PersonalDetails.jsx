@@ -2,7 +2,7 @@ import React from "react";
 import { Avatar, Form, Input, Typography, Upload, Button } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import { useDispatch } from "react-redux";
-import { add } from "../../redux/personal/PersonalSlice";
+import { add } from "../../redux/personal/personalSlice";
 const { Title } = Typography;
 
 export default function PersonalDetails() {
