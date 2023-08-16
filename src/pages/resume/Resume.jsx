@@ -18,7 +18,7 @@ export default function Resume() {
                 <WedAndSocialLink />
                 <Skills />
             </div>
-            <div className="bg-[#656e83] h-screen relative flex justify-center items-center">
+            <div className="bg-[#656e83] h-screen relative flex justify-center items-center ">
                 <ResumeBuilder />
             </div>
         </div>

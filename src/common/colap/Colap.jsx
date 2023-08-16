@@ -4,9 +4,14 @@ import { CaretRightOutlined, DeleteOutlined } from "@ant-design/icons";
 import ColapChildren from "./ColapChildren";
 import ColapEducationChildren from "./ColapEducationChildren";
 import ColapLinkChildren from "../social/ColapLinkChildren";
+import ColapSkillChildren from "../skills/ColapSkillChildren";
+import { useSelector } from "react-redux";
 
 export default function Colap({ handleDelete, i, type }) {
+    const show = useSelector((state) => state.skill.isShow);
     const [title, setTitle] = useState(`( Not specified )`);
+    const [level, setLevel] = useState("Expert");
+    const [link, setLink] = useState("");
     const { token } = theme.useToken();
     const panelStyle = {
         marginBottom: 24,
@@ -28,7 +33,13 @@ export default function Colap({ handleDelete, i, type }) {
                 items={[
                     {
                         key: i.key,
-                        label: <b>{title}</b>,
+                        label: (
+                            <div>
+                                <b>{title}</b>
+                                <p className="text-[#828ba2]">{link}</p>
+                                {type === "skill" && !show && level}
+                            </div>
+                        ),
                         children:
                             type === "education" ? (
                                 <ColapEducationChildren
@@ -36,7 +47,17 @@ export default function Colap({ handleDelete, i, type }) {
                                     i={i}
                                 />
                             ) : type === "link" ? (
-                                <ColapLinkChildren setTitle={setTitle} i={i} />
+                                <ColapLinkChildren
+                                    i={i}
+                                    setTitle={setTitle}
+                                    setLink={setLink}
+                                />
+                            ) : type === "skill" ? (
+                                <ColapSkillChildren
+                                    setTitle={setTitle}
+                                    i={i}
+                                    setLevel={setLevel}
+                                />
                             ) : (
                                 <ColapChildren setTitle={setTitle} i={i} />
                             ),

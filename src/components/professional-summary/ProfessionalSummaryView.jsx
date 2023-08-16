@@ -8,8 +8,7 @@ export default function ProfessionalSummaryView() {
             <div className="flex items-center gap-2">
                 <UserOutlined /> <p className="font-semibold">Profile</p>
             </div>
-
-            {typeof profile !== Object && (
+            {typeof profile.profile !== "object" && (
                 <p
                     className="!text-[10px] ml-5 break-all"
                     dangerouslySetInnerHTML={{ __html: profile }}

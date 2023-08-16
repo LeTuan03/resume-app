@@ -1,7 +1,11 @@
 import React from "react";
-import { Form, Input, Rate } from "antd";
+import { Button, Form, Input, Rate } from "antd";
+import { useDispatch, useSelector } from "react-redux";
+import { editSkill } from "../../redux/skill/skillSlice";
 
-export default function ColapSkillChildren({ setLevel, setTitle, isShow }) {
+export default function ColapSkillChildren({ setLevel, setTitle, i }) {
+    const dispatch = useDispatch();
+    const show = useSelector((state) => state.skill.isShow);
     const level = [
         { 1: "Novice" },
         { 2: "Beginer" },
@@ -34,9 +38,15 @@ export default function ColapSkillChildren({ setLevel, setTitle, isShow }) {
                 break;
         }
     };
+
+    const onFinish = async (e) => {
+        e.key = i.key;
+        dispatch(editSkill(e));
+    };
+
     return (
         <div>
-            <Form layout="vertical">
+            <Form layout="vertical" onFinish={onFinish}>
                 <div className="grid grid-cols-2 gap-x-10 gap-y-0">
                     <Form.Item
                         name="skill"
@@ -55,7 +65,7 @@ export default function ColapSkillChildren({ setLevel, setTitle, isShow }) {
                         label={<p className="text-[#828ba2]">Level - Expert</p>}
                     >
                         <Rate
-                            disabled={isShow}
+                            disabled={show}
                             onChange={handleRate}
                             character={
                                 <div className="!h-full text-9xl leading-[0.199]">
@@ -65,6 +75,14 @@ export default function ColapSkillChildren({ setLevel, setTitle, isShow }) {
                         />
                     </Form.Item>
                 </div>
+                <Form.Item>
+                    <Button
+                        htmlType="submit"
+                        className="bg-[green] text-white hover:!border-[green] hover:!text-white"
+                    >
+                        Save
+                    </Button>
+                </Form.Item>
             </Form>
         </div>
     );

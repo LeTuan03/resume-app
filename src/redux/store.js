@@ -4,6 +4,7 @@ import { profileSlice } from "./profile/profileSlice";
 import { historySlice } from "./history/historySlice";
 import { educationSlice } from "./education/educationSlice";
 import { linkSlice } from "./link/linkSlice";
+import { skillSlice } from "./skill/skillSlice";
 
 export const store = configureStore({
     reducer: {
@@ -12,5 +13,6 @@ export const store = configureStore({
         history: historySlice.reducer,
         education: educationSlice.reducer,
         link: linkSlice.reducer,
+        skill: skillSlice.reducer,
     },
 });

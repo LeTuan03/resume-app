@@ -1,13 +1,13 @@
 import React from "react";
 import { Button, Form, Input } from "antd";
 import { useDispatch } from "react-redux";
+import { editLink } from "../../redux/link/linkSlice";
 
-const ColapLinkChildren = ({ setTitle, i }) => {
+const ColapLinkChildren = ({ setTitle, i, setLink }) => {
     const dispatch = useDispatch();
     const onFinish = async (e) => {
         e.key = i.key;
-        console.log(e);
-        // dispatch(editEducation(e));
+        dispatch(editLink(e));
     };
     return (
         <Form layout="vertical" onFinish={onFinish}>
@@ -25,7 +25,10 @@ const ColapLinkChildren = ({ setTitle, i }) => {
                     name="link"
                     label={<p className="text-[#828ba2]">Link</p>}
                 >
-                    <Input className="bg-[#eff2f9] border-none py-3 px-4" />
+                    <Input
+                        className="bg-[#eff2f9] border-none py-3 px-4"
+                        onChange={(e) => setLink(e.target.value)}
+                    />
                 </Form.Item>
             </div>
             <Form.Item>

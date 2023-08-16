@@ -5,13 +5,13 @@ import EmployeeHistoryView from "../employee-history/EmployeeHistoryView";
 import EducationView from "../education/EducationView";
 import Detail from "../detail/Detail";
 import Link from "../links/Link";
-import SkillsDetail from "../skills/SkillsDetail";
 import DetailView from "../detail/DetailView";
+import SkillsView from "../skills/SkillsView";
 
 export default function ResumeBuilder() {
     // blur-[0.5px]
     return (
-        <div className="bg-white rounded-md absolute p-7 editor ">
+        <div className="bg-white rounded-md absolute p-7 editor pointer-events-none">
             <DetailView />
             <Row className="main my-4">
                 <Col span={16}>
@@ -22,7 +22,7 @@ export default function ResumeBuilder() {
                 <Col span={8} className="pl-6">
                     <Detail />
                     <Link />
-                    <SkillsDetail />
+                    <SkillsView />
                 </Col>
             </Row>
         </div>

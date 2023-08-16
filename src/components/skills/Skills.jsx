@@ -1,15 +1,35 @@
 import React, { useState } from "react";
-import { Switch, Typography } from "antd";
+import { useDispatch, useSelector } from "react-redux";
+import { Button, Switch, Typography } from "antd";
+import { PlusOutlined } from "@ant-design/icons";
 import SkillButton from "../../common/skills/SkillButton";
-import ColapSkill from "../../common/skills/ColapSkill";
+import Colap from "../../common/colap/Colap";
+import { addSkill, deleteSkill, setShow } from "../../redux/skill/skillSlice";
 const { Title, Text } = Typography;
 
 export default function Skills() {
-    const [isShow, setIsShow] = useState(false);
+    const show = useSelector((state) => state.skill.isShow);
+    const skill = useSelector((state) => state.skill.skill);
+    const initialValue = {
+        key: Math.random(),
+        skill: "",
+        level: "",
+    };
+    const dispatch = useDispatch();
+
+    const handleAdd = () => {
+        dispatch(addSkill(initialValue));
+    };
+    const handleDelete = (id) => {
+        dispatch(deleteSkill(id));
+    };
+    const handleShow = () => {
+        dispatch(setShow());
+    };
     return (
         <div>
             <Title level={4} className="!mb-5">
-                Skills
+                Skills for trainee position
             </Title>
             <Text type="secondary" className="font-semibold !my-5 block">
                 Choose 5 impotant skills that show you fit the position. Make
@@ -18,9 +38,9 @@ export default function Skills() {
             </Text>
             <div className="flex justify-start gap-4 mb-5">
                 <Switch
-                    defaultChecked={isShow}
+                    defaultChecked={show}
                     className="bg-slate-700"
-                    onChange={(e) => setIsShow(e)}
+                    onChange={handleShow}
                 />
                 <Text>Don't show experience level</Text>
             </div>
@@ -31,7 +51,23 @@ export default function Skills() {
                 <SkillButton text="Check text" />
                 <SkillButton />
             </div>
-            <ColapSkill isShow={isShow} />
+            {skill &&
+                skill.map((i) => (
+                    <Colap
+                        key={i.key}
+                        i={i}
+                        handleDelete={handleDelete}
+                        type="skill"
+                    />
+                ))}
+            <Button
+                className="w-full border-none text-left mb-3 flex items-center btn-hover"
+                icon={<PlusOutlined />}
+                type="link"
+                onClick={handleAdd}
+            >
+                <b>Add one more Education</b>
+            </Button>
         </div>
     );
 }
