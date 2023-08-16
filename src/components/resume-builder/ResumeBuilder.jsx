@@ -9,8 +9,9 @@ import SkillsDetail from "../skills/SkillsDetail";
 import DetailView from "../detail/DetailView";
 
 export default function ResumeBuilder() {
+    // blur-[0.5px]
     return (
-        <div className="bg-white rounded-md absolute p-7 editor blur-[0.5px]">
+        <div className="bg-white rounded-md absolute p-7 editor ">
             <DetailView />
             <Row className="main my-4">
                 <Col span={16}>

@@ -1,19 +1,30 @@
-import React, { useState } from "react";
+import React from "react";
 import { Button, Typography } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 const { Title } = Typography;
 
 import Colap from "../../common/colap/Colap";
+import { useDispatch, useSelector } from "react-redux";
+import { addHistory, deleteHistory } from "../../redux/history/historySlice";
 
 export default function EmployeeHistory() {
-    const [number, setNumber] = useState([{ key: Math.random() }]);
+    const initialValue = {
+        key: Math.random(),
+        job_title: "",
+        employer: "",
+        start: "",
+        end: "",
+        city: "",
+        description: "",
+    };
+    const history = useSelector((state) => state.history.history);
+    const dispatch = useDispatch();
 
     const handleAdd = () => {
-        setNumber((prevNumber) => [...prevNumber, { key: Math.random() }]);
+        dispatch(addHistory(initialValue));
     };
     const handleDelete = (id) => {
-        const newData = number.filter((i) => i.key !== id);
-        setNumber(newData);
+        dispatch(deleteHistory(id));
     };
 
     return (
@@ -21,16 +32,17 @@ export default function EmployeeHistory() {
             <Title level={4} className="!mb-5">
                 Employee History
             </Title>
-            {number.map((i) => (
-                <Colap key={i.key} id={i.key} handleDelete={handleDelete} />
-            ))}
+            {history &&
+                history.map((i) => (
+                    <Colap key={i.key} handleDelete={handleDelete} i={i} />
+                ))}
             <Button
                 className="w-full border-none text-left mb-3 flex items-center btn-hover"
                 icon={<PlusOutlined />}
                 type="link"
                 onClick={handleAdd}
             >
-                <b>Add one more employment</b>
+                <b>Add one more Employment</b>
             </Button>
         </div>
     );

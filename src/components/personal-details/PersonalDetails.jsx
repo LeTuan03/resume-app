@@ -1,13 +1,12 @@
 import React from "react";
 import { Avatar, Form, Input, Typography, Upload, Button } from "antd";
 import { UserOutlined } from "@ant-design/icons";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { add } from "../../redux/personal/PersonalSlice";
 const { Title } = Typography;
 
 export default function PersonalDetails() {
     const dispatch = useDispatch();
-    const persional = useSelector((state) => state.personal);
     const onFinish = (value) => {
         dispatch(add(value));
     };
@@ -101,9 +100,11 @@ export default function PersonalDetails() {
                     </Form.Item>
                 </div>
                 <Form.Item>
-                    <Button htmlType="submit">Save</Button>
-                    <Button onClick={() => console.log(persional)}>
-                        Save2
+                    <Button
+                        htmlType="submit"
+                        className="bg-[green] text-white hover:!border-[green] hover:!text-white"
+                    >
+                        Save
                     </Button>
                 </Form.Item>
             </Form>

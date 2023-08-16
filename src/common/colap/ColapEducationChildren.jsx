@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import ReactQuill from "react-quill";
 import { Button, DatePicker, Form, Input, Typography } from "antd";
 import { useDispatch } from "react-redux";
-import { editHistory } from "../../redux/history/historySlice";
 import formatDate from "../date/FormatDate";
+import { editEducation } from "../../redux/education/educationSlice";
 
 const { Text } = Typography;
 
-const ColapChildren = ({ setTitle, i }) => {
+const ColapEducationChildren = ({ setTitle, i }) => {
     const dispatch = useDispatch();
     const [content, setContent] = useState("");
     const onFinish = async (e) => {
@@ -15,15 +15,15 @@ const ColapChildren = ({ setTitle, i }) => {
         e.start = formatDate(e.start);
         e.end = formatDate(e.end);
         e.description = content;
-        dispatch(editHistory(e));
+        dispatch(editEducation(e));
     };
     return (
         <div>
             <Form layout="vertical" onFinish={onFinish}>
                 <div className="grid grid-cols-2 gap-x-10 gap-y-0">
                     <Form.Item
-                        name="job_title"
-                        label={<p className="text-[#828ba2]">Job title</p>}
+                        name="school"
+                        label={<p className="text-[#828ba2]">School</p>}
                     >
                         <Input
                             className="bg-[#eff2f9] border-none py-3 px-4"
@@ -32,8 +32,8 @@ const ColapChildren = ({ setTitle, i }) => {
                         />
                     </Form.Item>
                     <Form.Item
-                        name="employer"
-                        label={<p className="text-[#828ba2]">Employer</p>}
+                        name="degree"
+                        label={<p className="text-[#828ba2]">Degree</p>}
                     >
                         <Input className="bg-[#eff2f9] border-none py-3 px-4" />
                     </Form.Item>
@@ -96,4 +96,4 @@ const ColapChildren = ({ setTitle, i }) => {
     );
 };
 
-export default ColapChildren;
+export default ColapEducationChildren;

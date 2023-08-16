@@ -1,7 +1,7 @@
 import React from "react";
 import { Collapse, theme } from "antd";
 import { CaretRightOutlined } from "@ant-design/icons";
-import ColapSocialChildren from "./ColapSocialChildren";
+import ColapSocialChildren from "./ColapLinkChildren";
 
 const getItems = (panelStyle) => [
     {

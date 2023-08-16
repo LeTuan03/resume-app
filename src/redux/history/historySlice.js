@@ -11,9 +11,20 @@ export const historySlice = createSlice({
         addHistory: (state, action) => {
             state.history = [...state.history, action.payload];
         },
+        editHistory: (state, action) => {
+            state.history = state.history.map((item) =>
+                item.key === action.payload.key ? action.payload : item
+            );
+        },
+
+        deleteHistory: (state, action) => {
+            state.history = state.history.filter(
+                (item) => item.key !== action.payload
+            );
+        },
     },
 });
 
-export const { addHistory } = historySlice.actions;
+export const { addHistory, editHistory, deleteHistory } = historySlice.actions;
 
 export default historySlice.reducer;
