@@ -8,9 +8,11 @@ export default function Link() {
             <p className="font-semibold">Links</p>
             <div>
                 {link &&
-                    link.map((i) => (
+                    link.map((i, index) => (
                         <a
+                            key={index}
                             href={i.link}
+                            target="_blank"
                             className="!text-[10px] text-[#2c9bf3] block"
                         >
                             {i.lable}

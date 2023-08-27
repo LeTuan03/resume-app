@@ -80,3 +80,7 @@
     fill: rgb(159, 166, 187);
     margin: auto 4% auto auto;
 }
+
+.ant-upload-list-text {
+    display: none;
+}

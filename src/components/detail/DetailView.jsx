@@ -11,7 +11,10 @@ export default function DetailView() {
                 className="rounded"
                 width={50}
                 height={50}
-                src="https://i.pinimg.com/736x/62/6a/54/626a54ed8de30ea0c778cb62c877a9ae.jpg"
+                src={
+                    personal.avata ||
+                    "https://i.pinimg.com/736x/62/6a/54/626a54ed8de30ea0c778cb62c877a9ae.jpg"
+                }
             />
             <div className="uppercase">
                 <Title level={5} className="!m-0">
