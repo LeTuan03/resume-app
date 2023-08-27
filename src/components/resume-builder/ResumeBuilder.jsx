@@ -6,9 +6,9 @@ import ProfessionalSummaryView from "../professional-summary/ProfessionalSummary
 import EmployeeHistoryView from "../employee-history/EmployeeHistoryView";
 import EducationView from "../education/EducationView";
 import Detail from "../detail/Detail";
-import Link from "../links/Link";
 import DetailView from "../detail/DetailView";
 import SkillsView from "../skills/SkillsView";
+import WedAndSocialLink from "../wed-and-social-link/WedAndSocialLinkView";
 
 export default function ResumeBuilder() {
     const downloadSectionAsImage = async (elementId) => {
@@ -49,7 +49,7 @@ export default function ResumeBuilder() {
                     </Col>
                     <Col span={8} className="pl-6">
                         <Detail />
-                        <Link />
+                        <WedAndSocialLink />
                         <SkillsView />
                     </Col>
                 </Row>

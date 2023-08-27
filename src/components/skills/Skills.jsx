@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Switch, Typography } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-import SkillButton from "../../common/skills/SkillButton";
 import Colap from "../../common/colap/Colap";
 import { addSkill, deleteSkill, setShow } from "../../redux/skill/skillSlice";
 const { Title, Text } = Typography;
@@ -43,13 +42,6 @@ export default function Skills() {
                     onChange={handleShow}
                 />
                 <Text>Don't show experience level</Text>
-            </div>
-            <div className="flex flex-wrap gap-4 mb-4">
-                <SkillButton text="Check text" />
-                <SkillButton text="Check text" />
-                <SkillButton text="Check text" />
-                <SkillButton text="Check text" />
-                <SkillButton />
             </div>
             {skill &&
                 skill.map((i) => (

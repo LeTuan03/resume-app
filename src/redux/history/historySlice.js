@@ -1,7 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    history: [],
+    history: [
+        {
+            key: Math.random(),
+            job_title: "",
+            employer: "",
+            start: "",
+            end: "",
+            city: "",
+            description: "",
+        },
+    ],
 };
 
 export const historySlice = createSlice({

@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 
-export default function Link() {
+export default function WedAndSocialLink() {
     const link = useSelector((state) => state.link.link);
     return (
         <div className="mb-5">

@@ -21,60 +21,56 @@ export default function Colap({ handleDelete, i, type }) {
         padding: "15px 0px",
     };
     return (
-        <div>
-            <Collapse
-                bordered={false}
-                expandIcon={({ isActive }) => (
-                    <CaretRightOutlined rotate={isActive ? 90 : -90} />
-                )}
-                style={{
-                    background: token.colorBgContainer,
-                }}
-                items={[
-                    {
-                        key: i.key,
-                        label: (
-                            <div>
-                                <b>{title}</b>
-                                <p className="text-[#828ba2]">{link}</p>
-                                {type === "skill" && !show && level}
-                            </div>
-                        ),
-                        children:
-                            type === "education" ? (
-                                <ColapEducationChildren
-                                    setTitle={setTitle}
-                                    i={i}
-                                />
-                            ) : type === "link" ? (
-                                <ColapLinkChildren
-                                    i={i}
-                                    setTitle={setTitle}
-                                    setLink={setLink}
-                                />
-                            ) : type === "skill" ? (
-                                <ColapSkillChildren
-                                    setTitle={setTitle}
-                                    i={i}
-                                    setLevel={setLevel}
-                                />
-                            ) : (
-                                <ColapChildren setTitle={setTitle} i={i} />
-                            ),
-                        style: panelStyle,
-                        extra: (
-                            <DeleteOutlined
-                                className="absolute right-[-30px] top-1 text-xl text-[#cfd6e0] hover:text-[#1677ff]"
-                                onClick={(event) => {
-                                    event.stopPropagation();
-                                    handleDelete(i.key);
-                                }}
+        <Collapse
+            bordered={false}
+            expandIcon={({ isActive }) => (
+                <CaretRightOutlined rotate={isActive ? 90 : -90} />
+            )}
+            style={{
+                background: token.colorBgContainer,
+            }}
+            items={[
+                {
+                    key: i.key,
+                    label: (
+                        <div>
+                            <b>{title}</b>
+                            <p className="text-[#828ba2]">{link}</p>
+                            {type === "skill" && !show && level}
+                        </div>
+                    ),
+                    children:
+                        type === "education" ? (
+                            <ColapEducationChildren setTitle={setTitle} i={i} />
+                        ) : type === "link" ? (
+                            <ColapLinkChildren
+                                i={i}
+                                setTitle={setTitle}
+                                setLink={setLink}
                             />
+                        ) : type === "skill" ? (
+                            <ColapSkillChildren
+                                title={title}
+                                setTitle={setTitle}
+                                i={i}
+                                setLevel={setLevel}
+                            />
+                        ) : (
+                            <ColapChildren setTitle={setTitle} i={i} />
                         ),
-                    },
-                ]}
-                expandIconPosition="end"
-            />
-        </div>
+                    style: panelStyle,
+                    extra: (
+                        <DeleteOutlined
+                            className="absolute right-[-30px] top-1 text-xl text-[#cfd6e0] hover:text-[#1677ff]"
+                            onClick={(event) => {
+                                event.stopPropagation();
+                                handleDelete(i.key);
+                            }}
+                        />
+                    ),
+                },
+            ]}
+            expandIconPosition="end"
+        />
     );
 }

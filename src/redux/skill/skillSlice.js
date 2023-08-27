@@ -1,8 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    isShow: false,
-    skill: [],
+    isShow: true,
+    skill: [
+        {
+            key: Math.random(),
+            skill: "",
+            level: "",
+        },
+    ],
 };
 
 export const skillSlice = createSlice({

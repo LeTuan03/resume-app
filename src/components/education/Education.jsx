@@ -39,7 +39,12 @@ export default function Education() {
                 learnings and background will bring to job.
             </Text>
             {education.map((i) => (
-                <Colap handleDelete={handleDelete} i={i} type="education" />
+                <Colap
+                    handleDelete={handleDelete}
+                    i={i}
+                    type="education"
+                    key={i.key}
+                />
             ))}
             <Button
                 className="w-full border-none text-left mb-3 flex items-center btn-hover"

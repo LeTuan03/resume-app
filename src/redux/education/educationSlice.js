@@ -1,7 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    education: [],
+    education: [
+        {
+            key: Math.random(),
+            school: "",
+            degree: "",
+            start: "",
+            end: "",
+            city: "",
+            description: "",
+        },
+    ],
 };
 
 export const educationSlice = createSlice({

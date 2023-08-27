@@ -6,6 +6,7 @@ import Education from "../../components/education/Education";
 import WedAndSocialLink from "../../components/wed-and-social-link/WedAndSocialLink";
 import Skills from "../../components/skills/Skills";
 import ResumeBuilder from "../../components/resume-builder/ResumeBuilder";
+import Selection from "../../components/Selection/Selection";
 
 export default function Resume() {
     return (
@@ -46,6 +47,7 @@ export default function Resume() {
                 <Education />
                 <WedAndSocialLink />
                 <Skills />
+                <Selection />
             </div>
             <div className="bg-[#656e83] h-screen relative flex justify-center items-center ">
                 <ResumeBuilder />

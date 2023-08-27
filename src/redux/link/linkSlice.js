@@ -1,7 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    link: [],
+    link: [
+        {
+            key: Math.random(),
+            lable: "",
+            link: "",
+        },
+    ],
 };
 
 export const linkSlice = createSlice({

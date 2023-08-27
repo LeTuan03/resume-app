@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { Avatar, Form, Input, Typography, Upload, Button, message } from "antd";
-import { UserOutlined } from "@ant-design/icons";
+import { Avatar, Form, Input, Typography, Upload, Button } from "antd";
+import { DeleteOutlined, EditOutlined, UserOutlined } from "@ant-design/icons";
+
 import { useDispatch } from "react-redux";
 const { Title } = Typography;
 
@@ -8,39 +9,47 @@ import { add } from "../../redux/personal/personalSlice";
 
 export default function PersonalDetails() {
     const dispatch = useDispatch();
+    const [avata, setAvata] = useState("");
 
-    const [fileList, setFileList] = useState(null);
-    const handleChange = (info) => {
-        if (info.file.status === "done") {
-            message.success(`${info.file.name} file uploaded successfully`);
-            setFileList(info.file.originFileObj);
-        } else if (info.file.status === "error") {
-            message.error(`${info.file.name} file upload failed.`);
-            setFileList(null);
-        }
-    };
     const onFinish = (value) => {
-        if (fileList) {
-            value.avata = URL.createObjectURL(fileList);
-        }
+        value.avata = avata;
         dispatch(add(value));
     };
+    const handleBeforeUpload = (file) => {
+        setAvata(URL.createObjectURL(file));
+        return false;
+    };
     const uploadButton = (
-        <div>
-            <Avatar
-                shape="square"
-                size={64}
-                icon={
-                    <UserOutlined className="text-[#bec4d5] hover:text-[#1a91f0] flex justify-center items-center h-full" />
-                }
-                className="bg-[#eff2f9]"
-            />
-
-            <Button className="border-none text-[#1a91f0] shadow-none">
-                <b>Upload photo</b>
-            </Button>
+        <div className="flex justify-center items-center">
+            {!avata && (
+                <Avatar
+                    shape="square"
+                    size={64}
+                    icon={
+                        <UserOutlined className="text-[#bec4d5] hover:text-[#1a91f0] flex justify-center items-center h-full" />
+                    }
+                    className="bg-[#eff2f9]"
+                />
+            )}
+            {avata && (
+                <div>
+                    <Button
+                        icon={<EditOutlined />}
+                        className="flex justify-center items-center"
+                        type="text"
+                    >
+                        Edit photo
+                    </Button>
+                </div>
+            )}
+            {!avata && (
+                <Button className="border-none text-[#1a91f0] shadow-none">
+                    <b>Upload photo</b>
+                </Button>
+            )}
         </div>
     );
+
     return (
         <div className="mb-5">
             <Title level={4} className="!mb-5">
@@ -63,21 +72,29 @@ export default function PersonalDetails() {
                     </Form.Item>
 
                     <div className="flex items-center">
-                        <Upload
-                            multiple={false}
-                            action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                            onChange={handleChange}
-                        >
-                            {fileList ? (
-                                <img
-                                    src={URL.createObjectURL(fileList)}
-                                    alt="Avatar"
-                                    className="w-[60px] h-[60px] rounded bg-cover"
-                                />
-                            ) : (
-                                uploadButton
-                            )}
+                        {avata && (
+                            <img
+                                src={avata}
+                                alt="Avatar"
+                                className="w-[60px] h-[60px] rounded bg-cover"
+                            />
+                        )}
+                        <Upload beforeUpload={handleBeforeUpload}>
+                            {uploadButton}
                         </Upload>
+                        {avata && (
+                            <Button
+                                icon={<DeleteOutlined />}
+                                className="flex justify-center items-center"
+                                type="text"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    setAvata("");
+                                }}
+                            >
+                                Delete
+                            </Button>
+                        )}
                     </div>
 
                     <Form.Item

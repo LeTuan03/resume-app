@@ -8,6 +8,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { addHistory, deleteHistory } from "../../redux/history/historySlice";
 
 export default function EmployeeHistory() {
+    const history = useSelector((state) => state.history.history);
+    const dispatch = useDispatch();
     const initialValue = {
         key: Math.random(),
         job_title: "",
@@ -17,8 +19,6 @@ export default function EmployeeHistory() {
         city: "",
         description: "",
     };
-    const history = useSelector((state) => state.history.history);
-    const dispatch = useDispatch();
 
     const handleAdd = () => {
         dispatch(addHistory(initialValue));

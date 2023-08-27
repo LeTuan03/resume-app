@@ -10,20 +10,23 @@ export default function EducationView() {
                 <ReadOutlined />
                 <p className="font-semibold"> Education</p>
             </div>
-            {education.map((i) => (
-                <div className="ml-5" key={i.key}>
-                    <p className="!text-[10px] font-semibold ">
-                        {i.degree}, {i.school}, {i.school}
-                    </p>
-                    <p className="!text-[9px] text-slate-400">
-                        {i.start} - {i.end}
-                    </p>
-                    <p
-                        className="!text-[10px]"
-                        dangerouslySetInnerHTML={{ __html: i.description }}
-                    ></p>
-                </div>
-            ))}
+            {education &&
+                education.map((i) => (
+                    <div className="ml-5" key={i.key}>
+                        <p className="!text-[10px] font-semibold ">
+                            {i.degree}
+                            {i.school && ", " + i.school}
+                        </p>
+                        <p className="!text-[9px] text-slate-400">
+                            {i.start}
+                            {i.end && " - " + i.end}
+                        </p>
+                        <p
+                            className="!text-[10px]"
+                            dangerouslySetInnerHTML={{ __html: i.description }}
+                        ></p>
+                    </div>
+                ))}
         </div>
     );
 }
