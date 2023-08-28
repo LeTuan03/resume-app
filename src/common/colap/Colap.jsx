@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import { Collapse, theme } from "antd";
-import { CaretRightOutlined, DeleteOutlined } from "@ant-design/icons";
-import EmployeeHistoryChildren from "../../components/employee-history/EmployeeHistoryChildren";
-import ColapLinkChildren from "../social/ColapLinkChildren";
-import ColapSkillChildren from "../skills/ColapSkillChildren";
 import { useSelector } from "react-redux";
+import { CaretRightOutlined, DeleteOutlined } from "@ant-design/icons";
+
+import ModalDelete from "../delete/ModalDelete";
+
+import EmployeeHistoryChildren from "../../components/employee-history/EmployeeHistoryChildren";
 import ColapEducationChildren from "../../components/education/ColapEducationChildren";
+import WedAndSocialLinkChildren from "../../components/wed-and-social-link/WedAndSocialLinkChildren";
+import SkillChildren from "../../components/skills/SkillChildren";
 
 export default function Colap({ handleDelete, i, type }) {
     const show = useSelector((state) => state.skill.isShow);
@@ -34,8 +37,8 @@ export default function Colap({ handleDelete, i, type }) {
                     key: i.key,
                     label: (
                         <div>
-                            <b>{title}</b>
-                            <p className="text-[#828ba2]">{link}</p>
+                            <b className="break-all">{title}</b>
+                            <p className="text-[#828ba2] break-all">{link}</p>
                             {type === "skill" && !show && level}
                         </div>
                     ),
@@ -43,13 +46,13 @@ export default function Colap({ handleDelete, i, type }) {
                         type === "education" ? (
                             <ColapEducationChildren setTitle={setTitle} i={i} />
                         ) : type === "link" ? (
-                            <ColapLinkChildren
+                            <WedAndSocialLinkChildren
                                 i={i}
                                 setTitle={setTitle}
                                 setLink={setLink}
                             />
                         ) : type === "skill" ? (
-                            <ColapSkillChildren
+                            <SkillChildren
                                 title={title}
                                 setTitle={setTitle}
                                 i={i}
@@ -63,12 +66,12 @@ export default function Colap({ handleDelete, i, type }) {
                         ),
                     style: panelStyle,
                     extra: (
-                        <DeleteOutlined
-                            className="absolute right-[-30px] top-1 text-xl text-[#cfd6e0] hover:text-[#1677ff]"
-                            onClick={(event) => {
+                        <ModalDelete
+                            onDelete={(event) => {
                                 event.stopPropagation();
                                 handleDelete(i.key);
                             }}
+                            type="Colap"
                         />
                     ),
                 },

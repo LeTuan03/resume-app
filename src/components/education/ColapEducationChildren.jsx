@@ -1,15 +1,18 @@
-import React, { useState } from "react";
-import ReactQuill from "react-quill";
-import { Button, DatePicker, Form, Input, Typography } from "antd";
+import React, { useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
+import ReactQuill from "react-quill";
+import { DatePicker, Form, Input, Typography } from "antd";
+const { Text } = Typography;
+
 import formatDate from "../../common/date/FormatDate";
 import { editEducation } from "../../redux/education/educationSlice";
-
-const { Text } = Typography;
+import { setLoading } from "../../redux/loading/loadingSlice";
 
 const ColapEducationChildren = ({ setTitle, i }) => {
     const dispatch = useDispatch();
+    const [typingTimeout, setTypingTimeout] = useState(null);
     const [content, setContent] = useState("");
+    const [form] = Form.useForm();
     const onFinish = async (e) => {
         e.key = i.key;
         e.start = formatDate(e.start);
@@ -17,9 +20,32 @@ const ColapEducationChildren = ({ setTitle, i }) => {
         e.description = content;
         dispatch(editEducation(e));
     };
+    const handlechange = useCallback(
+        (changedFields) => {
+            dispatch(setLoading(true));
+            if (changedFields && changedFields.length > 0) {
+                if (typingTimeout) {
+                    clearTimeout(typingTimeout);
+                }
+                setTypingTimeout(
+                    setTimeout(() => {
+                        form.submit();
+                        dispatch(setLoading(false));
+                    }, 2000)
+                );
+            }
+        },
+        [typingTimeout]
+    );
+
     return (
         <div>
-            <Form layout="vertical" onFinish={onFinish}>
+            <Form
+                layout="vertical"
+                onFinish={onFinish}
+                form={form}
+                onFieldsChange={handlechange}
+            >
                 <div className="grid grid-cols-2 gap-x-10 gap-y-0">
                     <Form.Item
                         name="school"
@@ -74,7 +100,10 @@ const ColapEducationChildren = ({ setTitle, i }) => {
                 >
                     <ReactQuill
                         value={content}
-                        onChange={setContent}
+                        onChange={(e) => {
+                            setContent(e);
+                            form.submit();
+                        }}
                         placeholder="e.g Created and implemented lesson plants based on child-led interests and curiosities.
                         "
                     />
@@ -82,14 +111,6 @@ const ColapEducationChildren = ({ setTitle, i }) => {
                         Recruiter tip: write 50-200 characters to increase
                         interview chances
                     </Text>
-                </Form.Item>
-                <Form.Item>
-                    <Button
-                        htmlType="submit"
-                        className="bg-[green] text-white hover:!border-[green] hover:!text-white"
-                    >
-                        Save
-                    </Button>
                 </Form.Item>
             </Form>
         </div>

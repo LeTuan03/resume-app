@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import ReactQuill from "react-quill";
 import { useDispatch } from "react-redux";
 const { Text } = Typography;
@@ -6,24 +6,46 @@ import { DatePicker, Form, Input, Typography } from "antd";
 
 import { editHistory } from "../../redux/history/historySlice";
 import formatDate from "../../common/date/FormatDate";
+import { setLoading } from "../../redux/loading/loadingSlice";
 
 const EmployeeHistoryChildren = ({ setTitle, i }) => {
+    const [typingTimeout, setTypingTimeout] = useState(null);
     const [form] = Form.useForm();
     const dispatch = useDispatch();
     const [content, setContent] = useState("");
-    const onFinish = async (e) => {
+    const onFinish = (e) => {
         e.key = i.key;
         e.start = formatDate(e.start);
         e.end = formatDate(e.end);
         e.description = content;
-        setTimeout(() => {
-            dispatch(editHistory(e));
-        }, 3000);
+        dispatch(editHistory(e));
     };
+    const handlechange = useCallback(
+        (changedFields) => {
+            dispatch(setLoading(true));
+            if (changedFields && changedFields.length > 0) {
+                if (typingTimeout) {
+                    clearTimeout(typingTimeout);
+                }
+                setTypingTimeout(
+                    setTimeout(() => {
+                        form.submit();
+                        dispatch(setLoading(false));
+                    }, 2000)
+                );
+            }
+        },
+        [typingTimeout]
+    );
 
     return (
         <div>
-            <Form layout="vertical" onFinish={onFinish} form={form}>
+            <Form
+                layout="vertical"
+                onFinish={onFinish}
+                form={form}
+                onFieldsChange={handlechange}
+            >
                 <div className="grid grid-cols-2 gap-x-10 gap-y-0">
                     <Form.Item
                         name="job_title"
@@ -34,7 +56,6 @@ const EmployeeHistoryChildren = ({ setTitle, i }) => {
                             className="bg-[#eff2f9] border-none py-3 px-4"
                             onChange={(e) => {
                                 setTitle(e.target.value);
-                                form.submit();
                             }}
                             maxLength={50}
                         />
@@ -46,7 +67,6 @@ const EmployeeHistoryChildren = ({ setTitle, i }) => {
                         <Input
                             className="bg-[#eff2f9] border-none py-3 px-4"
                             name="employer"
-                            onChange={() => form.submit()}
                         />
                     </Form.Item>
                     <div className="flex gap-4 h-full">
@@ -63,7 +83,6 @@ const EmployeeHistoryChildren = ({ setTitle, i }) => {
                                 format="MMM, YYYY"
                                 size="large"
                                 picker="month"
-                                onChange={() => form.submit()}
                             />
                         </Form.Item>
                         <Form.Item name="end" label=" ">
@@ -72,7 +91,6 @@ const EmployeeHistoryChildren = ({ setTitle, i }) => {
                                 format="MMM, YYYY"
                                 size="large"
                                 picker="month"
-                                onChange={() => form.submit()}
                             />
                         </Form.Item>
                     </div>
@@ -84,7 +102,6 @@ const EmployeeHistoryChildren = ({ setTitle, i }) => {
                         <Input
                             className="bg-[#eff2f9] border-none py-3 px-4"
                             name="city"
-                            onChange={() => form.submit()}
                         />
                     </Form.Item>
                 </div>

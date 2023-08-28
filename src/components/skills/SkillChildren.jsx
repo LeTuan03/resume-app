@@ -1,11 +1,14 @@
-import React from "react";
-import { Button, Form, Input, Rate } from "antd";
+import React, { useCallback, useState } from "react";
+import { Form, Input, Rate } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { editSkill } from "../../redux/skill/skillSlice";
+import { setLoading } from "../../redux/loading/loadingSlice";
 
-export default function ColapSkillChildren({ setLevel, setTitle, i }) {
+export default function SkillChildren({ setLevel, setTitle, i }) {
     const dispatch = useDispatch();
     const show = useSelector((state) => state.skill.isShow);
+    const [form] = Form.useForm();
+    const [typingTimeout, setTypingTimeout] = useState(null);
     const level = [
         { 1: "Novice" },
         { 2: "Beginer" },
@@ -43,10 +46,31 @@ export default function ColapSkillChildren({ setLevel, setTitle, i }) {
         e.key = i.key;
         dispatch(editSkill(e));
     };
-
+    const handlechange = useCallback(
+        (changedFields) => {
+            dispatch(setLoading(true));
+            if (changedFields && changedFields.length > 0) {
+                if (typingTimeout) {
+                    clearTimeout(typingTimeout);
+                }
+                setTypingTimeout(
+                    setTimeout(() => {
+                        form.submit();
+                        dispatch(setLoading(false));
+                    }, 2000)
+                );
+            }
+        },
+        [typingTimeout]
+    );
     return (
         <div>
-            <Form layout="vertical" onFinish={onFinish}>
+            <Form
+                layout="vertical"
+                onFinish={onFinish}
+                form={form}
+                onFieldsChange={handlechange}
+            >
                 <div className="grid grid-cols-2 gap-x-10 gap-y-0">
                     <Form.Item
                         name="skill"
@@ -75,14 +99,6 @@ export default function ColapSkillChildren({ setLevel, setTitle, i }) {
                         />
                     </Form.Item>
                 </div>
-                <Form.Item>
-                    <Button
-                        htmlType="submit"
-                        className="bg-[green] text-white hover:!border-[green] hover:!text-white"
-                    >
-                        Save
-                    </Button>
-                </Form.Item>
             </Form>
         </div>
     );

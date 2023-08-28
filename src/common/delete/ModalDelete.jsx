@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Modal } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
-const ModalDelete = ({ onDelete, loading }) => {
+const ModalDelete = ({ onDelete, loading, type }) => {
     const [open, setOpen] = useState(false);
     return (
         <div
@@ -9,25 +9,39 @@ const ModalDelete = ({ onDelete, loading }) => {
                 e.stopPropagation();
             }}
         >
-            <Button
-                icon={<DeleteOutlined />}
-                className="flex justify-center items-center w-full "
-                type="text"
-                onClick={(e) => {
-                    e.stopPropagation();
-                    setOpen(true);
-                }}
-            >
-                Delete
-            </Button>
+            {type ? (
+                <DeleteOutlined
+                    className="absolute right-[-30px] top-1 text-xl text-[#cfd6e0] hover:text-[#1677ff]"
+                    onClick={(event) => {
+                        event.stopPropagation();
+                        setOpen(true);
+                    }}
+                />
+            ) : (
+                <Button
+                    icon={<DeleteOutlined />}
+                    className="flex justify-center items-center w-full "
+                    type="text"
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        setOpen(true);
+                    }}
+                >
+                    Delete
+                </Button>
+            )}
             {open && (
                 <Modal
                     title="Confirm delete !"
                     centered
                     open={open}
+                    onCancel={(e) => {
+                        e.stopPropagation();
+                        setOpen(false);
+                    }}
                     footer={
-                        <>
-                            <Button onClick={onDelete} loading={loading}>
+                        <div className="text-center mt-8">
+                            <Button onClick={onDelete} loading={loading} danger>
                                 Delete
                             </Button>
                             <Button
@@ -38,9 +52,9 @@ const ModalDelete = ({ onDelete, loading }) => {
                                 }}
                                 type="primary"
                             >
-                                Cancle
+                                Cancel
                             </Button>
-                        </>
+                        </div>
                     }
                 >
                     <p>Are you sure you want to delete this entry?</p>

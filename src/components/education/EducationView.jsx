@@ -15,14 +15,18 @@ export default function EducationView() {
                     <div className="ml-5" key={i.key}>
                         <p className="!text-[10px] font-semibold ">
                             {i.degree}
-                            {i.school && ", " + i.school}
+                            {i.degree && i.school ? ", " : ""}
+                            {i.school}
+                            {i.city && i.school ? ", " : ""}
+                            {i.city}
                         </p>
                         <p className="!text-[9px] text-slate-400">
                             {i.start}
-                            {i.end && " - " + i.end}
+                            {i.end && i.start ? " - " : ""}
+                            {i.end}
                         </p>
                         <p
-                            className="!text-[10px]"
+                            className="!text-[10px] break-all"
                             dangerouslySetInnerHTML={{ __html: i.description }}
                         ></p>
                     </div>

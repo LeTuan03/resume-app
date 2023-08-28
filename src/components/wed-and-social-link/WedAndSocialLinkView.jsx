@@ -13,7 +13,7 @@ export default function WedAndSocialLink() {
                             key={index}
                             href={i.link}
                             target="_blank"
-                            className="!text-[10px] text-[#2c9bf3] block"
+                            className="!text-[10px] text-[#2c9bf3] block break-all mb-1"
                         >
                             {i.lable}
                         </a>

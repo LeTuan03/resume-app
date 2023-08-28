@@ -14,9 +14,13 @@ const monthNames = [
 ];
 
 const formatDate = (date) => {
-    return `${monthNames[new Date(date).getMonth()]} ${new Date(
-        date
-    ).getFullYear()}`;
+    if (date) {
+        return `${monthNames[new Date(date).getMonth()]} ${new Date(
+            date
+        ).getFullYear()}`;
+    } else {
+        return "";
+    }
 };
 
 export default formatDate;

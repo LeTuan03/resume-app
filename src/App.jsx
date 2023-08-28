@@ -1,19 +1,31 @@
+import React from "react";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+
+import Layout from "./pages/layout/Layout";
 import ResumeBuilder from "./components/resume-builder/ResumeBuilder";
 import Resume from "./pages/resume/Resume";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-function App() {
-    return (
-        <>
-            <BrowserRouter>
-                <Routes>
-                    <Route path="/" element={<Resume />} />
-                    <Route path="/watch" element={<ResumeBuilder />} />
-                    <Route path="/*" element={<>Not found</>} />
-                </Routes>
-            </BrowserRouter>
-        </>
-    );
+const router = createBrowserRouter([
+    {
+        path: "/",
+        element: <Layout />,
+        children: [
+            {
+                index: true,
+                element: <Resume />,
+            },
+            {
+                path: "/watch",
+                element: <ResumeBuilder />,
+            },
+            {
+                path: "/*",
+                element: <>Not found</>,
+            },
+        ],
+    },
+]);
+
+export default function App() {
+    return <RouterProvider router={router} />;
 }
-
-export default App;

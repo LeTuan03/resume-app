@@ -1,6 +1,8 @@
 import React from "react";
-import { Button, Col, Row } from "antd";
 import html2canvas from "html2canvas";
+import { useSelector } from "react-redux";
+import { Button, Col, Row } from "antd";
+import { CheckCircleOutlined, LoadingOutlined } from "@ant-design/icons";
 
 import ProfessionalSummaryView from "../professional-summary/ProfessionalSummaryView";
 import EmployeeHistoryView from "../employee-history/EmployeeHistoryView";
@@ -11,6 +13,7 @@ import SkillsView from "../skills/SkillsView";
 import WedAndSocialLink from "../wed-and-social-link/WedAndSocialLinkView";
 
 export default function ResumeBuilder() {
+    const loading = useSelector((state) => state.loading.loading);
     const downloadSectionAsImage = async (elementId) => {
         const element = document.getElementById(elementId);
 
@@ -53,6 +56,17 @@ export default function ResumeBuilder() {
                         <SkillsView />
                     </Col>
                 </Row>
+            </div>
+            <div className="absolute bottom-7  text-white">
+                {loading ? (
+                    <div className="flex items-center gap-3">
+                        <LoadingOutlined /> <p>Saving</p>
+                    </div>
+                ) : (
+                    <div className="flex items-center gap-3">
+                        <CheckCircleOutlined /> <p>Saved</p>
+                    </div>
+                )}
             </div>
         </div>
     );

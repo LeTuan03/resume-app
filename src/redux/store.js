@@ -5,6 +5,7 @@ import { educationSlice } from "./education/educationSlice";
 import { linkSlice } from "./link/linkSlice";
 import { skillSlice } from "./skill/skillSlice";
 import { personalSlice } from "./personal/personalSlice";
+import { loadingSlice } from "./loading/loadingSlice";
 
 export const store = configureStore({
     reducer: {
@@ -14,5 +15,6 @@ export const store = configureStore({
         education: educationSlice.reducer,
         link: linkSlice.reducer,
         skill: skillSlice.reducer,
+        loading: loadingSlice.reducer,
     },
 });
