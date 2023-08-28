@@ -10,7 +10,6 @@
     margin: 0;
     box-sizing: border-box;
 }
-
 .main-left::-webkit-scrollbar {
     width: 0;
 }
