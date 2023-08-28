@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { Collapse, theme } from "antd";
 import { CaretRightOutlined, DeleteOutlined } from "@ant-design/icons";
-import ColapChildren from "./ColapChildren";
-import ColapEducationChildren from "./ColapEducationChildren";
+import EmployeeHistoryChildren from "../../components/employee-history/EmployeeHistoryChildren";
 import ColapLinkChildren from "../social/ColapLinkChildren";
 import ColapSkillChildren from "../skills/ColapSkillChildren";
 import { useSelector } from "react-redux";
+import ColapEducationChildren from "../../components/education/ColapEducationChildren";
 
 export default function Colap({ handleDelete, i, type }) {
     const show = useSelector((state) => state.skill.isShow);
@@ -56,7 +56,10 @@ export default function Colap({ handleDelete, i, type }) {
                                 setLevel={setLevel}
                             />
                         ) : (
-                            <ColapChildren setTitle={setTitle} i={i} />
+                            <EmployeeHistoryChildren
+                                setTitle={setTitle}
+                                i={i}
+                            />
                         ),
                     style: panelStyle,
                     extra: (

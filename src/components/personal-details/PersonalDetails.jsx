@@ -1,23 +1,32 @@
 import React, { useEffect, useState } from "react";
-import { Avatar, Form, Input, Typography, Upload, Button } from "antd";
+import {
+    Avatar,
+    Form,
+    Input,
+    Typography,
+    Upload,
+    Button,
+    Popover,
+    Modal,
+} from "antd";
 import { EditOutlined, UserOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
+import { debounce } from "lodash";
 const { Title } = Typography;
 
 import { add } from "../../redux/personal/personalSlice";
 import ModalDelete from "../../common/delete/ModalDelete";
-import { debounce } from "lodash";
 
 export default function PersonalDetails() {
     const personal = useSelector((state) => state.personal);
-
     const dispatch = useDispatch();
     const [avata, setAvata] = useState("");
     const [loading, setLoading] = useState(false);
+    const [isModalVisible, setIsModalVisible] = useState(false);
 
     const setDebouncedAvata = debounce(async (file) => {
         setAvata(URL.createObjectURL(file));
-        dispatch(add({ ...personal, avata: avata }));
+        dispatch(add({ ...personal, avata }));
         setLoading(false);
     }, 1000);
 
@@ -32,10 +41,13 @@ export default function PersonalDetails() {
     };
     useEffect(() => {
         if (avata) {
-            dispatch(add({ ...personal, ["avata"]: avata }));
+            dispatch(add({ ...personal, avata }));
             setLoading(false);
         }
     }, [avata]);
+    const content = (
+        <div>{avata && <img src={avata} alt="avatar-preview" />}</div>
+    );
 
     return (
         <div className="mb-5">
@@ -65,8 +77,29 @@ export default function PersonalDetails() {
                             <img
                                 src={avata}
                                 alt="Avatar"
-                                className="w-[60px] h-[60px] rounded bg-cover"
+                                className="w-[60px] h-[60px] rounded bg-cover cursor-pointer"
+                                onClick={() => setIsModalVisible(true)}
                             />
+                        )}
+                        {isModalVisible && (
+                            <Modal
+                                centered
+                                open={isModalVisible}
+                                onCancel={() => setIsModalVisible(false)}
+                                footer={null}
+                                bodyStyle={{
+                                    padding: 0,
+                                    margin: 0,
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                }}
+                            >
+                                <img
+                                    src={avata}
+                                    className="cursor-pointer max-w-[90%] max-h-[90vh] rounded"
+                                />
+                            </Modal>
                         )}
                         <Upload beforeUpload={handleBeforeUpload}>
                             {!avata ? (
@@ -100,9 +133,20 @@ export default function PersonalDetails() {
                                     </div>
                                     <ModalDelete
                                         onDelete={(e) => {
-                                            e.stopPropagation();
-                                            setAvata("");
+                                            setLoading(true);
+                                            setTimeout(() => {
+                                                e.stopPropagation();
+                                                setAvata("");
+                                                dispatch(
+                                                    add({
+                                                        ...personal,
+                                                        avata: "",
+                                                    })
+                                                );
+                                                setLoading(false);
+                                            }, 1000);
                                         }}
+                                        loading={loading}
                                     />
                                 </>
                             )}

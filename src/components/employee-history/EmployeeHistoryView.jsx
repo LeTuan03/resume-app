@@ -19,7 +19,10 @@ export default function EmployeeHistoryView() {
                                 {i.city && ", " + i.city}
                             </p>
                             <p className="!text-[9px] text-slate-400">
-                                {i.start} {i.end && " - " + i.end}
+                                {i.start !== "undefined NaN" && i.start}{" "}
+                                {i.end !== "undefined NaN" &&
+                                    i.end &&
+                                    " - " + i.end}
                             </p>
                             <p
                                 className="!text-[10px]"

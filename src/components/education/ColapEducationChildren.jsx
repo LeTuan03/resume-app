@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import ReactQuill from "react-quill";
 import { Button, DatePicker, Form, Input, Typography } from "antd";
 import { useDispatch } from "react-redux";
-import formatDate from "../date/FormatDate";
+import formatDate from "../../common/date/FormatDate";
 import { editEducation } from "../../redux/education/educationSlice";
 
 const { Text } = Typography;

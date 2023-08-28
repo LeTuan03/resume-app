@@ -1,21 +1,28 @@
 import React from "react";
-import { Typography } from "antd";
+import { Avatar, Typography } from "antd";
 import { Image } from "antd";
 import { useSelector } from "react-redux";
+import { UserOutlined } from "@ant-design/icons";
 const { Title, Paragraph } = Typography;
 export default function DetailView() {
     const personal = useSelector((state) => state.personal);
     return (
         <div className="flex gap-3 items-center">
-            <Image
-                className="rounded"
-                width={50}
-                height={50}
-                src={
-                    personal.avata ||
-                    "https://i.pinimg.com/736x/62/6a/54/626a54ed8de30ea0c778cb62c877a9ae.jpg"
-                }
-            />
+            {personal.avata ? (
+                <Image
+                    className="rounded"
+                    width={50}
+                    height={50}
+                    src={personal.avata}
+                />
+            ) : (
+                <Avatar
+                    shape="square"
+                    size={50}
+                    icon={<UserOutlined />}
+                    className="flex justify-center items-center"
+                />
+            )}
             <div className="uppercase">
                 <Title level={5} className="!m-0">
                     {`${personal.first_name || ""} ${personal.last_name || ""}`}

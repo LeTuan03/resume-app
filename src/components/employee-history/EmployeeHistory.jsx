@@ -1,10 +1,10 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Button, Typography } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 const { Title } = Typography;
 
 import Colap from "../../common/colap/Colap";
-import { useDispatch, useSelector } from "react-redux";
 import { addHistory, deleteHistory } from "../../redux/history/historySlice";
 
 export default function EmployeeHistory() {
