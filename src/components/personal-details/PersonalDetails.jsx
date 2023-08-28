@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Avatar, Form, Input, Typography, Upload, Button } from "antd";
 import { EditOutlined, UserOutlined } from "@ant-design/icons";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 const { Title } = Typography;
 
 import { add } from "../../redux/personal/personalSlice";
@@ -9,16 +9,15 @@ import ModalDelete from "../../common/delete/ModalDelete";
 import { debounce } from "lodash";
 
 export default function PersonalDetails() {
+    const personal = useSelector((state) => state.personal);
+
     const dispatch = useDispatch();
     const [avata, setAvata] = useState("");
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
 
-    const onFinish = (value) => {
-        value.avata = avata;
-        dispatch(add(value));
-    };
-    const setDebouncedAvata = debounce((file) => {
+    const setDebouncedAvata = debounce(async (file) => {
         setAvata(URL.createObjectURL(file));
+        dispatch(add({ ...personal, avata: avata }));
         setLoading(false);
     }, 1000);
 
@@ -27,14 +26,26 @@ export default function PersonalDetails() {
         setDebouncedAvata(file);
         return false;
     };
+    const handleChange = async (e) => {
+        const { name, value } = e.target;
+        dispatch(add({ ...personal, [name]: value }));
+    };
+    useEffect(() => {
+        if (avata) {
+            dispatch(add({ ...personal, ["avata"]: avata }));
+            setLoading(false);
+        }
+    }, [avata]);
+
     return (
         <div className="mb-5">
             <Title level={4} className="!mb-5">
                 Personal Details
             </Title>
-            <Form layout="vertical" onFinish={onFinish}>
+            <Form layout="vertical">
                 <div className="grid grid-cols-2 gap-x-10 gap-y-0">
                     <Form.Item
+                        onChange={handleChange}
                         name="job_description"
                         requiredMark={"optional"}
                         label={
@@ -43,6 +54,7 @@ export default function PersonalDetails() {
                         tooltip="Add a title like 'Senior Marketer' or Sales Executive' that quickly describes your overall experience or the type of role you're apply to"
                     >
                         <Input
+                            name="job_description"
                             placeholder="e.g Teacher"
                             className="bg-[#eff2f9] border-none py-3 px-4"
                         />
@@ -96,8 +108,8 @@ export default function PersonalDetails() {
                             )}
                         </Upload>
                     </div>
-
                     <Form.Item
+                        onChange={handleChange}
                         name="first_name"
                         label={<p className="text-[#828ba2]">First Name</p>}
                     >
@@ -107,6 +119,7 @@ export default function PersonalDetails() {
                         />
                     </Form.Item>
                     <Form.Item
+                        onChange={handleChange}
                         name="last_name"
                         label={<p className="text-[#828ba2]">Last Name</p>}
                     >
@@ -116,6 +129,7 @@ export default function PersonalDetails() {
                         />
                     </Form.Item>
                     <Form.Item
+                        onChange={handleChange}
                         name="email"
                         label={<p className="text-[#828ba2]">Email</p>}
                     >
@@ -125,6 +139,7 @@ export default function PersonalDetails() {
                         />
                     </Form.Item>
                     <Form.Item
+                        onChange={handleChange}
                         name="phone"
                         label={<p className="text-[#828ba2]">Phone</p>}
                     >
@@ -134,6 +149,7 @@ export default function PersonalDetails() {
                         />
                     </Form.Item>
                     <Form.Item
+                        onChange={handleChange}
                         name="country"
                         label={<p className="text-[#828ba2]">Country</p>}
                     >
@@ -143,6 +159,7 @@ export default function PersonalDetails() {
                         />
                     </Form.Item>
                     <Form.Item
+                        onChange={handleChange}
                         name="city"
                         label={<p className="text-[#828ba2]">City</p>}
                     >
@@ -152,6 +169,7 @@ export default function PersonalDetails() {
                         />
                     </Form.Item>
                     <Form.Item
+                        onChange={handleChange}
                         name="place_of_birth"
                         label={<p className="text-[#828ba2]">Place Of Birth</p>}
                     >
@@ -161,6 +179,7 @@ export default function PersonalDetails() {
                         />
                     </Form.Item>
                     <Form.Item
+                        onChange={handleChange}
                         name="date_of_birth"
                         requiredMark={"optional"}
                         tooltip="Add the date of birth only if it is a relevant requirement for your position. In most case , leave this blank"
@@ -172,14 +191,6 @@ export default function PersonalDetails() {
                         />
                     </Form.Item>
                 </div>
-                <Form.Item>
-                    <Button
-                        htmlType="submit"
-                        className="bg-[green] text-white hover:!border-[green] hover:!text-white"
-                    >
-                        Save
-                    </Button>
-                </Form.Item>
             </Form>
         </div>
     );
