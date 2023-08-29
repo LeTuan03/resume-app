@@ -1,37 +1,28 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
-    history: [
-        {
-            key: Math.random(),
-            job_title: "",
-            employer: "",
-            start: "",
-            end: "",
-            city: "",
-            description: "",
-        },
-    ],
-};
+const initialState = [
+    {
+        key: Math.random(),
+        job_title: "",
+        employer: "",
+        start: "",
+        end: "",
+        city: "",
+        description: "",
+    },
+];
 
 export const historySlice = createSlice({
     name: "history",
     initialState,
     reducers: {
-        addHistory: (state, action) => {
-            state.history = [...state.history, action.payload];
-        },
-        editHistory: (state, action) => {
-            state.history = state.history.map((item) =>
+        addHistory: (state, action) => [...state, action.payload],
+        editHistory: (state, action) =>
+            state.map((item) =>
                 item.key === action.payload.key ? action.payload : item
-            );
-        },
-
-        deleteHistory: (state, action) => {
-            state.history = state.history.filter(
-                (item) => item.key !== action.payload
-            );
-        },
+            ),
+        deleteHistory: (state, action) =>
+            state.filter((item) => item.key !== action.payload),
     },
 });
 

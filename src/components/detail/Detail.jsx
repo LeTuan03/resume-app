@@ -3,9 +3,16 @@ import { useSelector } from "react-redux";
 
 export default function Detail() {
     const personal = useSelector((state) => state.personal);
+    const firstElement = personal[0];
     return (
         <div>
-            <p className="font-semibold">Detail</p>
+            {(firstElement?.city ||
+                firstElement?.country ||
+                firstElement?.phone ||
+                firstElement?.date_of_birth ||
+                firstElement?.place_of_birth) && (
+                <p className="font-semibold">Detail</p>
+            )}
             <div className="mb-5">
                 <p className="!text-[10px]">{personal.city}</p>
                 <p className="!text-[10px]">{personal.country}</p>

@@ -3,13 +3,21 @@ import { ReadOutlined } from "@ant-design/icons";
 import { useSelector } from "react-redux";
 
 export default function EducationView() {
-    const education = useSelector((state) => state.education.education);
+    const education = useSelector((state) => state.education);
+    const firstElement = education[0];
     return (
         <div className="mb-3">
-            <div className="flex items-center gap-2">
-                <ReadOutlined />
-                <p className="font-semibold"> Education</p>
-            </div>
+            {(firstElement?.degree ||
+                firstElement?.school ||
+                firstElement?.city ||
+                firstElement?.start ||
+                firstElement?.end ||
+                firstElement?.description) && (
+                <div className="flex items-center gap-2">
+                    <ReadOutlined />
+                    <p className="font-semibold"> Education</p>
+                </div>
+            )}
             {education &&
                 education.map((i) => (
                     <div className="ml-5" key={i.key}>
@@ -27,7 +35,9 @@ export default function EducationView() {
                         </p>
                         <p
                             className="!text-[10px] break-all"
-                            dangerouslySetInnerHTML={{ __html: i.description }}
+                            dangerouslySetInnerHTML={{
+                                __html: i.description,
+                            }}
                         ></p>
                     </div>
                 ))}

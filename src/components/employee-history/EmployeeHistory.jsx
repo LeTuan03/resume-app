@@ -8,7 +8,7 @@ import Colap from "../../common/colap/Colap";
 import { addHistory, deleteHistory } from "../../redux/history/historySlice";
 
 export default function EmployeeHistory() {
-    const history = useSelector((state) => state.history.history);
+    const history = useSelector((state) => state.history);
     const dispatch = useDispatch();
     const initialValue = {
         key: Math.random(),

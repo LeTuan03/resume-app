@@ -1,37 +1,28 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
-    education: [
-        {
-            key: Math.random(),
-            school: "",
-            degree: "",
-            start: "",
-            end: "",
-            city: "",
-            description: "",
-        },
-    ],
-};
+const initialState = [
+    {
+        key: Math.random(),
+        school: "",
+        degree: "",
+        start: "",
+        end: "",
+        city: "",
+        description: "",
+    },
+];
 
 export const educationSlice = createSlice({
     name: "education",
     initialState,
     reducers: {
-        addEducation: (state, action) => {
-            state.education = [...state.education, action.payload];
-        },
-        editEducation: (state, action) => {
-            state.education = state.education.map((item) =>
+        addEducation: (state, action) => [...state, action.payload],
+        editEducation: (state, action) =>
+            state.map((item) =>
                 item.key === action.payload.key ? action.payload : item
-            );
-        },
-
-        deleteEducation: (state, action) => {
-            state.education = state.education.filter(
-                (item) => item.key !== action.payload
-            );
-        },
+            ),
+        deleteEducation: (state, action) =>
+            state.filter((item) => item.key !== action.payload),
     },
 });
 

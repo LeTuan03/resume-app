@@ -20,7 +20,7 @@ export default function Education() {
         city: "",
         description: "",
     };
-    const education = useSelector((state) => state.education.education);
+    const education = useSelector((state) => state.education);
     const dispatch = useDispatch();
 
     const handleAdd = () => {
