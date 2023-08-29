@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Switch, Typography } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
