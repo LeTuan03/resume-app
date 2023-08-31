@@ -1,63 +1,75 @@
-import React, { useEffect, useState } from "react";
-import {
-    Avatar,
-    Form,
-    Input,
-    Typography,
-    Upload,
-    Button,
-    Popover,
-    Modal,
-} from "antd";
+import React, { useCallback, useEffect, useState } from "react";
+import { Avatar, Form, Input, Typography, Upload, Button, Modal } from "antd";
 import { EditOutlined, UserOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { debounce } from "lodash";
 const { Title } = Typography;
 
-import { add } from "../../redux/personal/personalSlice";
 import ModalDelete from "../../common/delete/ModalDelete";
+import { add } from "../../redux/personal/personalSlice";
+import { setLoading } from "../../redux/loading/loadingSlice";
 
 export default function PersonalDetails() {
-    const personal = useSelector((state) => state.personal);
     const dispatch = useDispatch();
+    const personal = useSelector((state) => state.personal);
+    const [typingTimeout, setTypingTimeout] = useState(null);
+    const [form] = Form.useForm();
     const [avata, setAvata] = useState("");
-    const [loading, setLoading] = useState(false);
+    const [loadingPersional, setLoadingPersional] = useState(false);
     const [isModalVisible, setIsModalVisible] = useState(false);
 
     const setDebouncedAvata = debounce(async (file) => {
         setAvata(URL.createObjectURL(file));
         dispatch(add({ ...personal, avata }));
-        setLoading(false);
+        dispatch(setLoading(false));
+        setLoadingPersional(false);
     }, 1000);
 
     const handleBeforeUpload = (file) => {
-        setLoading(true);
+        dispatch(setLoading(true));
+        setLoadingPersional(true);
         setDebouncedAvata(file);
         return false;
-    };
-    const handleChange = async (e) => {
-        const { name, value } = e.target;
-        dispatch(add({ ...personal, [name]: value }));
     };
     useEffect(() => {
         if (avata) {
             dispatch(add({ ...personal, avata }));
-            setLoading(false);
+            setLoadingPersional(false);
         }
     }, [avata]);
-    const content = (
-        <div>{avata && <img src={avata} alt="avatar-preview" />}</div>
+    const handlechange = useCallback(
+        (changedFields) => {
+            dispatch(setLoading(true));
+            if (changedFields && changedFields.length > 0) {
+                if (typingTimeout) {
+                    clearTimeout(typingTimeout);
+                }
+                setTypingTimeout(
+                    setTimeout(() => {
+                        form.submit();
+                        dispatch(setLoading(false));
+                    }, 2000)
+                );
+            }
+        },
+        [typingTimeout]
     );
-
+    const onFinish = (e) => {
+        dispatch(add({ ...personal, ...e }));
+    };
     return (
         <div className="mb-5">
             <Title level={4} className="!mb-5">
                 Personal Details
             </Title>
-            <Form layout="vertical">
+            <Form
+                layout="vertical"
+                form={form}
+                onFinish={onFinish}
+                onFieldsChange={handlechange}
+            >
                 <div className="grid grid-cols-2 gap-x-10 gap-y-0">
                     <Form.Item
-                        onChange={handleChange}
                         name="job_description"
                         requiredMark={"optional"}
                         label={
@@ -114,7 +126,7 @@ export default function PersonalDetails() {
                                     />
                                     <Button
                                         className="border-none text-[#1a91f0] shadow-none"
-                                        loading={loading}
+                                        loading={loadingPersional}
                                     >
                                         <b>Upload photo</b>
                                     </Button>
@@ -123,7 +135,7 @@ export default function PersonalDetails() {
                                 <>
                                     <div>
                                         <Button
-                                            loading={loading}
+                                            loading={loadingPersional}
                                             icon={<EditOutlined />}
                                             className="flex justify-center items-center w-full"
                                             type="text"
@@ -133,7 +145,7 @@ export default function PersonalDetails() {
                                     </div>
                                     <ModalDelete
                                         onDelete={(e) => {
-                                            setLoading(true);
+                                            setLoadingPersional(true);
                                             setTimeout(() => {
                                                 e.stopPropagation();
                                                 setAvata("");
@@ -143,17 +155,16 @@ export default function PersonalDetails() {
                                                         avata: "",
                                                     })
                                                 );
-                                                setLoading(false);
+                                                setLoadingPersional(false);
                                             }, 1000);
                                         }}
-                                        loading={loading}
+                                        loading={loadingPersional}
                                     />
                                 </>
                             )}
                         </Upload>
                     </div>
                     <Form.Item
-                        onChange={handleChange}
                         name="first_name"
                         label={<p className="text-[#828ba2]">First Name</p>}
                     >
@@ -163,7 +174,6 @@ export default function PersonalDetails() {
                         />
                     </Form.Item>
                     <Form.Item
-                        onChange={handleChange}
                         name="last_name"
                         label={<p className="text-[#828ba2]">Last Name</p>}
                     >
@@ -173,7 +183,6 @@ export default function PersonalDetails() {
                         />
                     </Form.Item>
                     <Form.Item
-                        onChange={handleChange}
                         name="email"
                         label={<p className="text-[#828ba2]">Email</p>}
                     >
@@ -183,7 +192,6 @@ export default function PersonalDetails() {
                         />
                     </Form.Item>
                     <Form.Item
-                        onChange={handleChange}
                         name="phone"
                         label={<p className="text-[#828ba2]">Phone</p>}
                     >
@@ -193,7 +201,6 @@ export default function PersonalDetails() {
                         />
                     </Form.Item>
                     <Form.Item
-                        onChange={handleChange}
                         name="country"
                         label={<p className="text-[#828ba2]">Country</p>}
                     >
@@ -203,7 +210,6 @@ export default function PersonalDetails() {
                         />
                     </Form.Item>
                     <Form.Item
-                        onChange={handleChange}
                         name="city"
                         label={<p className="text-[#828ba2]">City</p>}
                     >
@@ -213,7 +219,6 @@ export default function PersonalDetails() {
                         />
                     </Form.Item>
                     <Form.Item
-                        onChange={handleChange}
                         name="place_of_birth"
                         label={<p className="text-[#828ba2]">Place Of Birth</p>}
                     >
@@ -223,7 +228,6 @@ export default function PersonalDetails() {
                         />
                     </Form.Item>
                     <Form.Item
-                        onChange={handleChange}
                         name="date_of_birth"
                         requiredMark={"optional"}
                         tooltip="Add the date of birth only if it is a relevant requirement for your position. In most case , leave this blank"

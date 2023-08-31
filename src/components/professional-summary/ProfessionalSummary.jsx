@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useState } from "react";
 import { Typography } from "antd";
 const { Title, Text } = Typography;
 
@@ -6,12 +6,29 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useDispatch } from "react-redux";
 import { addProfile } from "../../redux/profile/profileSlice";
+import { setLoading } from "../../redux/loading/loadingSlice";
 
 export default function ProfessionalSummary() {
     const dispatch = useDispatch();
-    const handleChange = (e) => {
-        dispatch(addProfile(e));
-    };
+    const [typingTimeout, setTypingTimeout] = useState(null);
+
+    const handleChange = useCallback(
+        (changedFields) => {
+            dispatch(setLoading(true));
+            if (changedFields && changedFields.length > 0) {
+                if (typingTimeout) {
+                    clearTimeout(typingTimeout);
+                }
+                setTypingTimeout(
+                    setTimeout(() => {
+                        dispatch(addProfile(changedFields));
+                        dispatch(setLoading(false));
+                    }, 2000)
+                );
+            }
+        },
+        [typingTimeout]
+    );
     return (
         <div className="mb-5">
             <Title level={4}>Professional Summary</Title>

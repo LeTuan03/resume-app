@@ -8,7 +8,6 @@ const { Title, Text } = Typography;
 
 export default function WedAndSocialLink() {
     const link = useSelector((state) => state.link);
-    console.log(link);
     const dispatch = useDispatch();
     const initialValue = {
         key: Math.random(),

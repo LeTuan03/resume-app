@@ -37,7 +37,22 @@ const ColapEducationChildren = ({ setTitle, i }) => {
         },
         [typingTimeout]
     );
-
+    const handleChangeQill = useCallback(
+        (changedFields) => {
+            setContent(changedFields);
+            dispatch(setLoading(true));
+            if (typingTimeout) {
+                clearTimeout(typingTimeout);
+            }
+            setTypingTimeout(
+                setTimeout(() => {
+                    form.submit();
+                    dispatch(setLoading(false));
+                }, 2000)
+            );
+        },
+        [typingTimeout]
+    );
     return (
         <div>
             <Form
@@ -100,10 +115,7 @@ const ColapEducationChildren = ({ setTitle, i }) => {
                 >
                     <ReactQuill
                         value={content}
-                        onChange={(e) => {
-                            setContent(e);
-                            form.submit();
-                        }}
+                        onChange={handleChangeQill}
                         placeholder="e.g Created and implemented lesson plants based on child-led interests and curiosities.
                         "
                     />
