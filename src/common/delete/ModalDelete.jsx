@@ -44,6 +44,7 @@ const ModalDelete = ({ onDelete, loading, type }) => {
                             <Button onClick={onDelete} loading={loading} danger>
                                 Delete
                             </Button>
+
                             <Button
                                 className="bg-[#1677ff]"
                                 onClick={(e) => {

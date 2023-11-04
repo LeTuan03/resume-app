@@ -7,8 +7,11 @@ import WedAndSocialLink from "../../components/wed-and-social-link/WedAndSocialL
 import Skills from "../../components/skills/Skills";
 import ResumeBuilder from "../../components/resume-builder/ResumeBuilder";
 import Selection from "../../components/Selection/Selection";
+import Untitled from "../../components/Selection/Untitled";
+import { useSelector } from "react-redux";
 
 export default function Resume() {
+    const untitled = useSelector((state) => state.untitled);
     return (
         <div className="grid grid-cols-2 gap-4">
             <div className="p-12 h-screen overflow-scroll main-left">
@@ -47,6 +50,9 @@ export default function Resume() {
                 <Education />
                 <WedAndSocialLink />
                 <Skills />
+                {untitled?.map((i) => (
+                    <Untitled key={i.key} itemParent={i} />
+                ))}
                 <Selection />
             </div>
             <div className="bg-[#656e83] h-screen relative flex justify-center items-center ">

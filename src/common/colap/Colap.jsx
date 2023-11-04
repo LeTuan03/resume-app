@@ -9,20 +9,14 @@ import EmployeeHistoryChildren from "../../components/employee-history/EmployeeH
 import ColapEducationChildren from "../../components/education/ColapEducationChildren";
 import WedAndSocialLinkChildren from "../../components/wed-and-social-link/WedAndSocialLinkChildren";
 import SkillChildren from "../../components/skills/SkillChildren";
+import UntitledChildren from "../../components/Selection/UntitledChildren";
 
-export default function Colap({ handleDelete, i, type }) {
+export default function Colap({ handleDelete, i, type, parentKey }) {
     const show = useSelector((state) => state.skill.isShow);
     const [title, setTitle] = useState(`( Not specified )`);
     const [level, setLevel] = useState("Expert");
     const [link, setLink] = useState("");
     const { token } = theme.useToken();
-    const panelStyle = {
-        marginBottom: 24,
-        background: "#fff",
-        borderRadius: token.borderRadiusLG,
-        border: "1px solid rgb(231, 234, 244)",
-        padding: "15px 0px",
-    };
     return (
         <Collapse
             bordered={false}
@@ -58,13 +52,25 @@ export default function Colap({ handleDelete, i, type }) {
                                 i={i}
                                 setLevel={setLevel}
                             />
+                        ) : type === "untitled" ? (
+                            <UntitledChildren
+                                setTitle={setTitle}
+                                i={i}
+                                parentKey={parentKey}
+                            />
                         ) : (
                             <EmployeeHistoryChildren
                                 setTitle={setTitle}
                                 i={i}
                             />
                         ),
-                    style: panelStyle,
+                    style: {
+                        marginBottom: 24,
+                        background: "#fff",
+                        borderRadius: token.borderRadiusLG,
+                        border: "1px solid rgb(231, 234, 244)",
+                        padding: "15px 0px",
+                    },
                     extra: (
                         <ModalDelete
                             onDelete={(event) => {

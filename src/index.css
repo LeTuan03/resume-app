@@ -83,3 +83,11 @@
 .ant-upload-list-text {
     display: none;
 }
+.link-progress {
+    position: absolute;
+    bottom: -110%;
+    left: 0;
+}
+.input-untitled:hover .icon-untitled {
+    display: block;
+}

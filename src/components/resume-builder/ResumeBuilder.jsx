@@ -11,6 +11,7 @@ import Detail from "../detail/Detail";
 import DetailView from "../detail/DetailView";
 import SkillsView from "../skills/SkillsView";
 import WedAndSocialLink from "../wed-and-social-link/WedAndSocialLinkView";
+import UntitledView from "../Selection/UntitledView";
 
 export default function ResumeBuilder() {
     const loading = useSelector((state) => state.loading.loading);
@@ -49,6 +50,7 @@ export default function ResumeBuilder() {
                         <ProfessionalSummaryView />
                         <EmployeeHistoryView />
                         <EducationView />
+                        {/* <UntitledView /> */}
                     </Col>
                     <Col span={8} className="pl-6">
                         <Detail />
